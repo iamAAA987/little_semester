@@ -11,7 +11,7 @@
           <div class="business-img">
             <img :src="item.businessImg">
             <!-- 角标：显示是购物车中的商品数量 -->
-            <div class="business-img-quantity">
+            <div class="business-img-quantity" v-if="item.quentity!= undefined & item.quantity!= 0">
               {{item.quantity}}
             </div>
           </div>
@@ -40,8 +40,6 @@
     import { getSessionStorage } from "@/common";
     const router = useRouter(); //创建路由对象
     const route = useRoute();//这里是useRoute而非useRouter!!!
-
-
 
     const businessList= ref([])
     const account = getSessionStorage('account');

@@ -40,12 +40,14 @@ public class CartController extends BaseController {
         QueryWrapper<Cart> qw = new QueryWrapper<>();
         qw.eq("account_id",accountId);
         qw.eq("business_id",businessId);
-
         List<Cart> list = cartService.list(qw);
-
-
+        //使用购物车中 goods_id，再次查询商品数据
+        list.stream().forEach( cart ->{
+            Goods goods = goodsService.getById(cart.getGoodsId());
+            cart.setGoods(goods);
+        });
         return Result.success(list);
-        }
+    }
 
     //插入购物车数据
     @PostMapping("/add")

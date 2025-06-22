@@ -87,7 +87,7 @@
         <div class="cart-right">
           
           <!-- 达到起送费显示内容 v-show="totalSettle>=business.starPrice"-->
-           <div  v-if= "totalPrice >= business.starPrice" class="cart-right-item" >
+           <div @click="toOrderConfirm()" v-if= "totalPrice >= business.starPrice" class="cart-right-item" >
             去结算
           </div> 
           <!-- 不够起送费显示内容  -->
@@ -123,6 +123,10 @@ import {post} from "@/api/index.js"
 
   //取出登录用户数据
   const account = getSessionStorage('account');
+
+  const toOrderConfirm =()=>{
+    router.push({path:'/orderConfirm',query:{businessId:businessId}})
+  }
 
   const loadCart = ()=>{
     let url = `/cart/listCart/${account.accountId}/${businessId}`;

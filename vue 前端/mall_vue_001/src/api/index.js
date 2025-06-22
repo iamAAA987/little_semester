@@ -3,7 +3,7 @@ import qs from "qs"
 
 //创建axios对象，做一些基础设置
 const axiosInstance =  axios.create({
-    baseURL:'http://localhost:10001',
+    baseURL:'http://localhost:10002',
     timeout:50000
 });
 

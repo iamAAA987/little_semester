@@ -4,6 +4,8 @@ import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
 import BusinessList from '@/views/BusinessList.vue'
 import BusinessInfo from '@/views/BusinessInfo.vue'
+import OrderConfirm from '@/views/OrderConfirm.vue'
+import Address from '@/views/Address.vue'
 
 const routes = [
   //路由对象,规则
@@ -34,7 +36,18 @@ const routes = [
     path: '/businessInfo',
     name: 'businessInfo',
     component: BusinessInfo
-  }
+  },
+  {
+    path: '/orderConfirm',
+    name: 'orderConfirm',
+    component: OrderConfirm
+ },
+ {
+    path: '/address',
+    name: 'address',
+    component: Address
+ }
+
 ]
 
 //创建路由对象
