@@ -58,4 +58,13 @@ public class BusinessController extends BaseController {
         return Result.success(list);
     }
 
+    // 商家名称模糊搜索
+    @GetMapping("/search")
+    public Result search(@RequestParam String keyword) {
+        QueryWrapper<Business> qw = new QueryWrapper<>();
+        qw.like("business_name", keyword);
+        List<Business> list = bService.list(qw);
+        return Result.success(list);
+    }
+
 }

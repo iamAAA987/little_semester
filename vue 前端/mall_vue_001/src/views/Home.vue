@@ -16,7 +16,14 @@
             <div class="search-top" ref="fixedBox">
                 <div class="search-box">
                     <i class="search_icon" aria-hidden="true" />
-                    <input type="text" placeholder="搜索商家名称、商品名称" />
+                    <input
+                        type="text"
+                        placeholder="搜索商家名称、商品名称"
+                        v-model="searchKeyword"
+                        @keyup.enter="searchBusiness"
+                        class="search-input"
+                    />
+                    <button @click="searchBusiness" class="search-btn">搜索</button>
                 </div>
             </div>
         </div><br><br>
@@ -128,12 +135,14 @@ import {getSessionStorage} from "@/common"
 import axios from 'axios'; // 导入 HTTP 请求库
 import { get } from '@/api';
 import {useRouter} from "vue-router"
+import { ElMessage } from 'element-plus';
 const router = useRouter(); //创建路由对象
 //用户登录信息
 const account = getSessionStorage('account');
 
 const categoryList = ref([]);
 const businessList = ref([]);
+const searchKeyword = ref('');
 
 //根据商家分类编号 跳转至商家列表页面
 const toBusinessList =(id) =>{
@@ -224,6 +233,22 @@ onUnmounted(() => {
 const toBusinessInfo = (businessId) => {
   router.push({ path: '/businessInfo', query: { businessId } });
 };
+
+const searchBusiness = () => {
+  if (!searchKeyword.value.trim()) {
+    ElMessage && ElMessage({ message: '请输入要搜索的商家名称', type: 'warning' });
+    return;
+  }
+  let url = `/business/search?keyword=${encodeURIComponent(searchKeyword.value)}`;
+  get(url).then(res => {
+    if (res.data.code === 20000) {
+      businessList.value = res.data.resultdata;
+    } else {
+      ElMessage && ElMessage({ message: '未找到相关商家', type: 'info' });
+      businessList.value = [];
+    }
+  });
+};
 </script>
 
 <style scoped>
@@ -268,7 +293,8 @@ const toBusinessInfo = (businessId) => {
         width:90%; height:9vw; background-color: #fff; border-radius:4vw;
         border:0.4vw solid #a1c4fd;
         display: flex; justify-content: center; align-items: center;
-        font-size: 3.5vw; color:#79859E;  padding:0 10vw; box-sizing: border-box;
+        font-size: 3.5vw; color:#79859E;  padding:0 2vw; box-sizing: border-box;
+        box-shadow: 0 2px 8px rgba(161,196,253,0.08);
     }    
 
     .wrapper .search .search-box .search_icon{
@@ -279,11 +305,34 @@ const toBusinessInfo = (businessId) => {
         background-size: cover;
     }
 
-    .wrapper .search .search-box input{
-        width:100%; height:4.5vw; line-height: 4.5vw; font-size:4vw; border: none; outline: none;
-        margin-left:2vw; color:#79859E;
+    .wrapper .search .search-box .search-input{
+        width: 70%;
+        height: 5vw;
+        border: none;
+        outline: none;
+        font-size: 3.8vw;
+        padding: 0 2vw;
+        border-radius: 2vw 0 0 2vw;
+        background: transparent;
+        color: #333;
     }
 
+    .wrapper .search .search-box .search-btn{
+        height: 5vw;
+        padding: 0 3vw;
+        border: none;
+        background: linear-gradient(to right,#ace0f9,#1c95ff);
+        color: #fff;
+        font-size: 3.8vw;
+        border-radius: 0 2vw 2vw 0;
+        cursor: pointer;
+        margin-left: -1vw;
+        transition: background 0.3s;
+    }
+
+    .wrapper .search .search-box .search-btn:hover{
+        background: linear-gradient(to right,#1c95ff,#ace0f9);
+    }
 
     /*商品分类*/
     .wrapper .category-ul{
