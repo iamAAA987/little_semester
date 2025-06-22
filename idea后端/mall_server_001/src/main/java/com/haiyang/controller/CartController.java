@@ -8,6 +8,7 @@ import com.haiyang.entity.Goods;
 import com.haiyang.mapper.CartMapper;
 import com.haiyang.service.CartService;
 import com.haiyang.service.GoodsService;
+import com.haiyang.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,8 @@ public class CartController extends BaseController {
     private CartService cartService;
     @Autowired
     private GoodsService goodsService;
+    @Autowired
+    private BusinessService businessService;
 
     @GetMapping("/listCartByAccountId/{accountId}")
     public Result listCart(@PathVariable String accountId) {
@@ -79,6 +82,29 @@ public class CartController extends BaseController {
         qw.eq("account_id",cart.getAccountId());
         cartService.remove(qw);
         return Result.success("购物车数删除成功");
+    }
+
+    /**
+     * 查询当前用户所有未结算的购物车商品，带商品和商家详情
+     */
+    @GetMapping("/listAllCartWithDetail/{accountId}")
+    public Result listAllCartWithDetail(@PathVariable String accountId) {
+        QueryWrapper<Cart> qw = new QueryWrapper<>();
+        qw.eq("account_id", accountId);
+        // 可根据需要加状态筛选，如qw.eq("statu", 1);
+        List<Cart> list = cartService.list(qw);
+        list.forEach(cart -> {
+            Goods goods = goodsService.getById(cart.getGoodsId());
+            cart.setGoods(goods);
+            // 查询商家名称
+            if (cart.getBusinessId() != null) {
+                var business = businessService.getById(cart.getBusinessId());
+                if (business != null) {
+                    cart.setBusinessName(business.getBusinessName());
+                }
+            }
+        });
+        return Result.success(list);
     }
 
 }

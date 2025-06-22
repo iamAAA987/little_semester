@@ -47,7 +47,7 @@ public class BusinessController extends BaseController {
         });
         return Result.success(businessList);
     }
-    
+
 
     @GetMapping("/list")
     public Result list(){

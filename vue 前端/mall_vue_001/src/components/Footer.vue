@@ -31,6 +31,10 @@ const toHome = ()=>{
 const toUserCenter = ()=>{
     router.push('/login');
 }
+
+const toCart = ()=>{
+    router.push('/cart');
+}
 // export default {
 //     data() {
 //         return {

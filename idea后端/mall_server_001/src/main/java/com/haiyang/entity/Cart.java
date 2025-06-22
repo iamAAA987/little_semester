@@ -57,5 +57,8 @@ public class Cart extends BaseEntity {
     @TableField(exist = false)
     private Goods goods;
 
+    // 自定义：商家名称（非数据库字段，仅返回用）
+    @TableField(exist = false)
+    private String businessName;
 
 }
