@@ -75,7 +75,7 @@
             v-for="(元素,下标) in 数组"" 
         -->
         <ul class="business">
-            <li v-for="(item,index) in businessList" :key="index">    
+            <li v-for="(item,index) in businessList" :key="index" @click="toBusinessInfo(item.businessId)">
                 <!-- 添加div，设置相对定位 -->
                 <div style="position: relative; z-index:0">
                     <img :src="item.businessImg"/>
@@ -220,6 +220,10 @@ onUnmounted(() => {
     //当切换到其他组件时，就不需要document滚动条事件，所以将此事件去掉
     document.onscroll = null;
  });
+
+const toBusinessInfo = (businessId) => {
+  router.push({ path: '/businessInfo', query: { businessId } });
+};
 </script>
 
 <style scoped>

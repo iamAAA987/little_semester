@@ -10,8 +10,8 @@
     <div class="business-info-banner">
         <!-- 查看全部评论 -->
         <div class="top-right" >
-            <div class="AllComment">
-                查看评论
+            <div class="AllComment" @click="showCommentSection = !showCommentSection">
+                {{ showCommentSection ? '收起评论' : '查看评论' }}
                 <i class="el-icon-d-arrow-right"></i>
             </div>
         </div>
@@ -27,6 +27,24 @@
         </div>
     </div>
 
+    <!-- 评论区 -->
+    <div v-if="showCommentSection" class="comment-section">
+      <h3>用户评价</h3>
+      <div v-if="commentList.length === 0" style="color:#888;">暂无评价</div>
+      <ul>
+        <li v-for="item in commentList" :key="item.coId" class="comment-item">
+          <div>
+            <b>{{ item.accountId }}</b>
+            <span style="color:#fcba26;">{{ item.rate }}星</span>
+            <span style="color:#aaa; font-size:12px;">{{ item.created ? item.created.slice(0, 10) : '' }}</span>
+          </div>
+          <div>{{ item.coText }}</div>
+          <div v-if="item.coImg">
+            <img :src="item.coImg" style="max-width:100px;max-height:100px;" />
+          </div>
+        </li>
+      </ul>
+    </div>
 
     <!-- 商品信息 -->
     <ul class="food">
@@ -280,9 +298,22 @@ import {post} from "@/api/index.js"
 
   }
 
+  const showCommentSection = ref(false);
+  const commentList = ref([]);
+
+  const loadComments = () => {
+    let url = `/comment/list/${businessId}`;
+    get(url).then(res => {
+      if (res.data.code === 20000) {
+        commentList.value = res.data.resultdata;
+      }
+    });
+  };
+
   const init = ()=>{
     loadBusinessInfo();
     loadGoodsByBusinessId();
+    loadComments();
   }
   init();
 </script>
