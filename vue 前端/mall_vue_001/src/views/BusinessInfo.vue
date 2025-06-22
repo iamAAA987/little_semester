@@ -1,8 +1,9 @@
 <template>
   <div class="wrapper">  
     <!-- header部分 -->
-    <header>
-    <p>商家详情</p>
+    <header style="position: relative; background:linear-gradient(to right,#fff1eb,#ace0f9); color:#596164;">
+      <span class="back-text" @click="goHome">返回</span>
+      <p>商家详情</p>
     </header>
     
 
@@ -316,6 +317,10 @@ import {post} from "@/api/index.js"
     loadComments();
   }
   init();
+
+  const goHome = () => {
+    router.push({ path: '/' });
+  };
 </script>
 
 <style scoped>
@@ -327,20 +332,20 @@ import {post} from "@/api/index.js"
     }
   
     /****************** header部分 ******************/
-    .wrapper header {
+    .header-bar {
       width: 100%;
       height: 12vw;
-      background:linear-gradient(to right,#fff1eb,#ace0f9 ); color:#596164;
+      background: linear-gradient(to right,#fff1eb,#ace0f9 );
+      color: #596164;
       font-size: 4.8vw;
       letter-spacing:1vw;
       position: fixed;
       left: 0;
       top: 0;
       z-index: 1000;
-  
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
     }
     
     .wrapper .business-info-banner{  
@@ -602,5 +607,23 @@ import {post} from "@/api/index.js"
     
     .wrapper .cart .cart-icon2{
       background-color: #cecece;
+    }
+
+    .back-text {
+      position: absolute;
+      left: 2vw;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 4vw;
+      color: #1c95ff;
+      cursor: pointer;
+      z-index: 2000;
+    }
+    header p {
+      text-align: center;
+      width: 100%;
+      margin: 0;
+      font-size: 4.8vw;
+      font-weight: bold;
     }
 </style>

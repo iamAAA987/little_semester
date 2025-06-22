@@ -1,7 +1,8 @@
 <template>
   <div class="wrapper">
     <!-- header部分 -->
-    <header>
+    <header style="position: relative; background:linear-gradient(to right,#fff1eb,#ace0f9); color:#596164;">
+      <span class="back-text" @click="goBusiness">返回</span>
       <p>确认订单</p>
     </header>
 
@@ -142,6 +143,10 @@ const loadCart=()=>{
   const init =()=>{
       loadBusiness();
   }
+
+  const goBusiness = () => {
+    router.push({ path: '/businessInfo', query: { businessId } });
+  };
 
  init();
 </script>
@@ -326,5 +331,24 @@ const loadCart=()=>{
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .back-text {
+    position: absolute;
+    left: 2vw;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 4vw;
+    color: #1c95ff;
+    cursor: pointer;
+    z-index: 2000;
+  }
+
+  header p {
+    text-align: center;
+    width: 100%;
+    margin: 0;
+    font-size: 4.8vw;
+    font-weight: bold;
   }
 </style>
