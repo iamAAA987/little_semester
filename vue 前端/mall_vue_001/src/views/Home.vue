@@ -19,7 +19,7 @@
                     <input type="text" placeholder="搜索商家名称、商品名称" />
                 </div>
             </div>
-        </div>
+        </div><br><br>
         
         <!-- 商品的分类信息 动态数据 
             {{ 插值表达式 }}只能将数据显示在标签中 <h1>{{变量名}}</h1> 
@@ -35,7 +35,7 @@
                 <img :src="item.categoryCover" />
                 <p>{{item.categoryName}}</p>
             </li>
-        </ul>
+        </ul><br><br><br>
 
         <!-- 横幅广告 -->
         <div class="banner">
