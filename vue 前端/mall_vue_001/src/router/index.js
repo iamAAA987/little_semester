@@ -6,6 +6,7 @@ import BusinessList from '@/views/BusinessList.vue'
 import BusinessInfo from '@/views/BusinessInfo.vue'
 import OrderConfirm from '@/views/OrderConfirm.vue'
 import Address from '@/views/Address.vue'
+import Payment from '@/views/Payment.vue'
 
 const routes = [
   //路由对象,规则
@@ -46,6 +47,11 @@ const routes = [
     path: '/address',
     name: 'address',
     component: Address
+ },
+ {
+  path: '/payment',
+    name: 'payment',
+    component: Payment
  }
 
 ]

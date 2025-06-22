@@ -43,7 +43,7 @@
       <div class="total-left">总价：
         &#165; {{ $fmtPrice(totalPrice) }}
       </div>
-      <div class="total-right" >
+      <div class="total-right" @click="toPayment()">
         去支付
       </div>
     </div>
@@ -100,6 +100,30 @@ const loadBusiness=()=>{
         }
     });
  }
+
+ //跳转至支付页面
+const toPayment = ()=>{
+if(deliveryAddress==null){
+  ElMessage({
+    message: '请选择配送地址信息',
+    type: 'error',
+  })
+  return;
+}
+//生成订单
+let url ="/orders/save";
+let orders = {
+  accountId:account.accountId,
+  businessId:businessId,
+  daId:deliveryAddress.daId,
+  orderTotal:totalPrice.value
+};
+post(url,orders,true).then(res=>{
+  let orderId = res.data.resultdata;
+  router.push({path:'/payment',query:{businessId:businessId,orderId:orderId}});
+});
+}
+
 //加载购物车的数据
 const loadCart=()=>{
     let url =`/cart/listCart/${account.accountId}/${businessId}`;
